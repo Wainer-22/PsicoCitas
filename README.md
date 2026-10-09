@@ -7,12 +7,6 @@ Aplicación para la gestión de citas de una clínica psicológica. Permite a lo
 - Psicólogo: Ver sus citas y agenda, definir y bloquear horarios.
 - Administrador: Gestionar usuarios, psicólogos, horarios, citas y permisos.
 
-|      Rol      | Qué puede hacer                                                               |
-|:-------------:| ----------------------------------------------------------------------------- |
-|   Paciente    | Registrarse, consultar disponibilidad, reservar, reprogramar y cancelar citas |
-|   Psicólogo   | Ver sus citas y agenda, definir y bloquear horarios                           |
-| Administrador | Gestionar usuarios, psicólogos, horarios, citas y permisos                    |
-
 
 ## Stack Tecnológico
 
