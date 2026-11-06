@@ -1,0 +1,249 @@
+:root {
+    --verde: #477c65;
+    --verde-claro: #e3efea;
+    --verde-oscuro: #254d3e;
+    --borde: #a5c4b5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f8faf8;
+    font-family: Georgia, serif;
+    color: #303b35;
+}
+
+.pagina {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #f0f7f3;
+    border-right: 1px solid #d5e4db;
+    padding: 25px 15px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+
+.logo {
+    background: var(--verde);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.marca h3 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.marca small {
+    color: var(--verde);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu a {
+    display: block;
+    padding: 14px;
+    color: #405448;
+    background: #e8f2ed;
+    border: 1px solid #d7e6dc;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.menu a:hover {
+    background: #d6e9de;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.encabezado {
+    height: 85px;
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 25px;
+    padding: 20px 35px;
+    border-bottom: 1px solid #edf0ed;
+}
+
+.usuario {
+    background: #bfd6cc;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.notificaciones {
+    font-size: 25px;
+    color: var(--verde-oscuro);
+}
+
+/* FORMULARIO DE REGISTRO */
+
+.formulario-contenedor {
+    display: flex;
+    justify-content: center;
+    padding: 45px 25px;
+}
+
+.formulario {
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    background: var(--verde-claro);
+    border-radius: 12px;
+}
+
+.formulario h2 {
+    text-align: center;
+    font-size: 29px;
+    margin-bottom: 35px;
+}
+
+.campo {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.campo label {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.campo input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 10px 15px;
+    background: white;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px #cde4d6;
+}
+
+/* BOTON CONTINUAR */
+
+.botones {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.botones button {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 10px 28px;
+    font-size: 20px;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: #39443d;
+    box-shadow: 0 3px 5px #00000015;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.botones button:hover {
+    background: var(--verde);
+    color: white;
+}
+
+/* RESPONSIVE - TABLET Y CELULAR */
+
+@media (max-width: 768px) {
+
+    .pagina {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .marca {
+        margin-bottom: 20px;
+    }
+
+    .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .menu a {
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .formulario-contenedor {
+        padding: 20px 15px;
+    }
+
+    .formulario {
+        padding: 25px 15px;
+    }
+
+    .campo {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .campo label {
+        text-align: left;
+        font-size: 18px;
+    }
+
+    .encabezado {
+        height: 65px;
+        padding: 10px 15px;
+    }
+
+    .formulario h2 {
+        font-size: 25px;
+    }
+}

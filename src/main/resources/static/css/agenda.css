@@ -1,0 +1,402 @@
+:root {
+    --verde: #3d765f;
+    --oscuro: #183f34;
+    --claro: #e7f1ea;
+    --borde: #e0e9e2;
+    --gris: #82948a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #fbfcfa;
+    font-family: Arial, sans-serif;
+    color: var(--oscuro);
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    min-width: 240px;
+    background: #f7faf7;
+    border-right: 1px solid var(--borde);
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 43px;
+    height: 43px;
+    background: var(--verde);
+    color: white;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 29px;
+}
+
+.marca h3 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 24px;
+}
+
+.marca small {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--verde);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.menu a {
+    padding: 13px;
+    border-radius: 10px;
+    color: #72867b;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.menu a.activo,
+.menu a:hover {
+    background: var(--claro);
+    color: var(--oscuro);
+    font-weight: bold;
+}
+
+.sidebar-inferior {
+    margin-top: auto;
+}
+
+.seguridad {
+    background: var(--claro);
+    border-radius: 12px;
+    padding: 17px;
+    font-size: 12px;
+}
+
+.seguridad p {
+    color: #718b7c;
+    margin: 7px 0 0;
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    height: 80px;
+    background: white;
+    border-bottom: 1px solid var(--borde);
+    padding: 0 35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #dcefe3;
+    display: grid;
+    place-items: center;
+}
+
+.usuario strong,
+.usuario small {
+    display: block;
+    font-size: 12px;
+}
+
+.usuario small {
+    color: var(--gris);
+    margin-top: 4px;
+}
+
+.dashboard {
+    max-width: 1350px;
+    margin: auto;
+    padding: 45px 35px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.etiqueta {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.8px;
+    color: #8ba696;
+}
+
+.titulo h1 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.titulo p:last-child {
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.selector-vista {
+    display: flex;
+    padding: 5px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: white;
+}
+
+.selector-vista a {
+    padding: 10px 17px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #6c8576;
+    font-size: 12px;
+}
+
+.selector-vista a.activo {
+    background: var(--claro);
+    color: var(--oscuro);
+    font-weight: bold;
+}
+
+.calendario {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px #183f3406;
+}
+
+.calendario-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.navegacion-fecha {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.navegacion-fecha strong {
+    font-family: Georgia, serif;
+    font-size: 16px;
+}
+
+.flecha,
+.btn-hoy {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 8px 13px;
+    text-decoration: none;
+    color: var(--verde);
+    background: white;
+}
+
+.flecha:hover,
+.btn-hoy:hover {
+    background: var(--claro);
+}
+
+.semana {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(110px, 1fr));
+    min-height: 480px;
+}
+
+.dia-columna {
+    border-right: 1px solid var(--borde);
+}
+
+.dia-columna:last-child {
+    border-right: none;
+}
+
+.dia-encabezado {
+    background: #fafcfb;
+    border-bottom: 1px solid var(--borde);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.dia-encabezado small {
+    color: var(--gris);
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.dia-encabezado strong {
+    font-size: 17px;
+}
+
+.dia-contenido {
+    padding: 8px;
+}
+
+.cita {
+    background: #e1f0e6;
+    border-left: 3px solid var(--verde);
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-wrap: anywhere;
+    font-size: 12px;
+}
+
+.cita span {
+    font-weight: bold;
+}
+
+.cita small {
+    color: #698575;
+}
+
+.sin-citas {
+    padding: 35px;
+    text-align: center;
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.cita-fila {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.cita-fecha {
+    background: var(--claro);
+    padding: 12px;
+    border-radius: 10px;
+    min-width: 65px;
+    text-align: center;
+}
+
+.cita-fecha strong,
+.cita-fecha small {
+    display: block;
+}
+
+.cita-fecha strong {
+    font-size: 22px;
+}
+
+.cita-fecha small {
+    font-size: 10px;
+}
+
+.cita-paciente {
+    flex: 1;
+}
+
+.cita-paciente strong,
+.cita-paciente small {
+    display: block;
+}
+
+.cita-paciente small {
+    color: var(--gris);
+    margin-top: 6px;
+}
+
+.cita-hora {
+    font-weight: bold;
+}
+
+.estado {
+    background: var(--claro);
+    color: var(--verde);
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 10px;
+}
+
+@media (max-width: 1150px) {
+    .semana {
+        overflow-x: auto;
+    }
+
+    .calendario {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    .app {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .sidebar-inferior {
+        display: none;
+    }
+
+    .dashboard {
+        padding: 25px 15px;
+    }
+
+    .titulo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cita-fila {
+        flex-wrap: wrap;
+    }
+
+    .calendario-barra {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disponibilidad | Calma</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/disponibilidad.css}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="marca">
+            <div class="logo">♡</div>
+            <div>
+                <h3>Calma</h3>
+                <small>PSICOLOGÍA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a href="#">⌂ &nbsp; Resumen</a>
+            <a href="#">▦ &nbsp; Mi agenda</a>
+            <a th:href="@{/psicologo/disponibilidad}"
+               class="activo">
+                ◷ &nbsp; Disponibilidad
+            </a>
+        </nav>
+
+        <div class="sidebar-inferior">
+            <div class="seguridad">
+                <strong>Tu espacio es seguro</strong>
+                <p>Tus datos están protegidos y son confidenciales.</p>
+            </div>
+            <p class="texto-pequeno">VISTA DEL PROTOTIPO</p>
+            <select class="form-select form-select-sm" disabled>
+                <option>Psicólogo</option>
+            </select>
+        </div>
+
+    </aside>
+
+    <div class="contenido">
+
+        <header class="topbar">
+            <span class="campana">♧</span>
+            <div class="usuario">
+                <div class="avatar">VR</div>
+                <div>
+                    <strong>Dra. Valentina Ruiz</strong>
+                    <small>Psicólogo</small>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+
+            <div class="titulo">
+                <p class="etiqueta">TU TIEMPO</p>
+                <h1>Disponibilidad</h1>
+                <p>Define los horarios en los que tus pacientes pueden reservar.</p>
+            </div>
+
+            <div th:if="${mensaje != null}"
+                 class="alert alert-success"
+                 th:text="${mensaje}">
+            </div>
+
+            <div th:if="${error != null}"
+                 class="alert alert-danger"
+                 th:text="${error}">
+            </div>
+
+            <form th:action="@{/psicologo/disponibilidad/guardar}"
+                  method="post">
+
+                <div class="columnas">
+
+                    <section class="tarjeta horarios">
+
+                        <div class="tarjeta-titulo">
+                            <h3>Horario semanal</h3>
+                            <p>Activa los días y ajusta tus bloques disponibles.</p>
+                        </div>
+
+                        <div class="fila-horario"
+                             th:each="h, estado : ${horarios}">
+
+                            <div class="dia">
+                                <input type="checkbox"
+                                       name="activo"
+                                       th:value="${estado.index}"
+                                       th:checked="${h.activo}">
+
+                                <span th:text="${h.diaSemana}">
+                                    Lunes
+                                </span>
+                            </div>
+
+                            <input type="hidden"
+                                   name="diaSemana"
+                                   th:value="${h.diaSemana}">
+
+                            <div class="horas">
+                                <input type="time"
+                                       name="horaInicio"
+                                       th:value="${h.horaInicio}"
+                                       required>
+
+                                <span>a</span>
+
+                                <input type="time"
+                                       name="horaFin"
+                                       th:value="${h.horaFin}"
+                                       required>
+                            </div>
+
+                        </div>
+
+                        <div class="pie-tarjeta">
+                            <button type="submit"
+                                    class="btn-guardar">
+                                Guardar cambios
+                            </button>
+                        </div>
+
+                    </section>
+
+                    <div class="columna-derecha">
+
+                        <section class="tarjeta configuracion">
+                            <p class="etiqueta">CONFIGURACIÓN</p>
+                            <h3>Duración de sesión</h3>
+
+                            <select name="duracionSesion"
+                                    class="form-select">
+                                <option value="30">30 minutos</option>
+                                <option value="45">45 minutos</option>
+                                <option value="50" selected>
+                                    50 minutos
+                                </option>
+                                <option value="60">60 minutos</option>
+                            </select>
+
+                            <p class="nota">
+                                Se reservarán 10 minutos entre sesiones
+                                para que puedas prepararte.
+                            </p>
+                        </section>
+
+                        <section class="consejo">
+                            <p>◷</p>
+                            <strong>Consejo</strong>
+                            <p>
+                                Mantén tus horarios actualizados
+                                para evitar reprogramaciones y
+                                brindar una mejor experiencia.
+                            </p>
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>
