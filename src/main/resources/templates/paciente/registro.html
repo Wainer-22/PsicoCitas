@@ -112,6 +112,13 @@
                                required>
                     </div>
 
+                    <div class="campo">
+                        <label for="contrasena">Contraseña</label>
+                        <input id="contrasena" name="contrasena"
+                               type="password" minlength="8"
+                               autocomplete="new-password" required>
+                    </div>
+
                     <div class="botones">
                         <button type="submit">
                             Continuar
@@ -119,6 +126,8 @@
                     </div>
 
                 </form>
+
+                <p class="text-center mt-4">¿Ya tienes cuenta? <a th:href="@{/acceso/login}">Inicia sesión</a></p>
 
             </div>
 

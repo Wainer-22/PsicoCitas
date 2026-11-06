@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${edicion ? 'Editar usuario' : 'Crear usuario'} + ' | PsicoCitas'">Usuario | PsicoCitas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
+</head>
+<body>
+<main class="formulario-contenedor"><section class="formulario">
+    <h2 th:text="${edicion ? 'Editar usuario' : 'Crear usuario'}">Usuario</h2>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form th:action="@{/administrador/usuarios/guardar}" th:object="${usuario}" method="post" novalidate>
+        <input type="hidden" th:field="*{idUsuario}">
+        <div class="campo"><label for="nombre">Nombre</label><div><input id="nombre" th:field="*{nombre}" maxlength="50" required th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{nombre}"></div></div></div>
+        <div class="campo"><label for="apellidos">Apellidos</label><div><input id="apellidos" th:field="*{apellidos}" maxlength="80" required th:classappend="${#fields.hasErrors('apellidos')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{apellidos}"></div></div></div>
+        <div class="campo"><label for="correo">Correo</label><div><input id="correo" type="email" th:field="*{correo}" required th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{correo}"></div></div></div>
+        <div class="campo"><label for="rol">Rol</label><select id="rol" th:field="*{rol}" required><option value="">Seleccione un rol</option><option value="PACIENTE">Paciente</option><option value="PSICOLOGO">Psicólogo</option><option value="ADMINISTRADOR">Administrador</option></select></div>
+        <div class="campo"><label for="contrasena">Contraseña</label><div><input id="contrasena" name="contrasena" type="password" minlength="8" th:required="${!edicion}" autocomplete="new-password">
+            <small th:if="${edicion}">Déjela vacía para conservar la contraseña actual.</small><small th:unless="${edicion}">Debe tener al menos 8 caracteres.</small></div></div>
+        <div class="campo" th:if="${edicion}"><label for="activo">Estado</label><select id="activo" th:field="*{activo}"><option th:value="true">Activo</option><option th:value="false">Inactivo</option></select></div>
+        <div class="botones gap-3"><a class="btn btn-outline-secondary" th:href="@{/administrador/usuarios}">Volver</a><button type="submit">Guardar</button></div>
+    </form>
+</section></main>
+</body>
+</html>

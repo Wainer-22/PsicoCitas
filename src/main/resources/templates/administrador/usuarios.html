@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrar usuarios | PsicoCitas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
+</head>
+<body>
+<main class="container py-5">
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <div><p class="text-success mb-1">ADMINISTRACIÓN</p><h1>Usuarios</h1></div>
+        <div class="d-flex gap-2"><a class="btn btn-success" th:href="@{/administrador/usuarios/nuevo}">Crear usuario</a>
+            <form th:action="@{/acceso/logout}" method="post"><button class="btn btn-outline-secondary">Cerrar sesión</button></form></div>
+    </header>
+    <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+    <div class="table-responsive bg-white rounded shadow-sm p-3">
+        <table class="table align-middle"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
+            <tbody><tr th:each="cuenta : ${usuarios}"><td th:text="${cuenta.nombre + ' ' + cuenta.apellidos}"></td><td th:text="${cuenta.correo}"></td>
+                <td th:text="${cuenta.rol}"></td><td><span th:text="${cuenta.activo ? 'Activo' : 'Inactivo'}" th:class="${cuenta.activo ? 'badge text-bg-success' : 'badge text-bg-secondary'}"></span></td>
+                <td><a class="btn btn-outline-success btn-sm" th:href="@{/administrador/usuarios/{id}/editar(id=${cuenta.idUsuario})}">Editar</a></td></tr>
+                <tr th:if="${#lists.isEmpty(usuarios)}"><td colspan="5" class="text-center text-muted">Todavía no hay usuarios registrados.</td></tr></tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
