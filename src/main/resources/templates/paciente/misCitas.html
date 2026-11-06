@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mis citas | Calma</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/misCitas.css}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="marca">
+            <div class="logo">♡</div>
+            <div>
+                <h3>Calma</h3>
+                <small>PSICOLOGÍA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a th:href="@{/paciente/inicio}">
+                ⌂ &nbsp; Inicio
+            </a>
+
+            <a th:href="@{/paciente/citas}"
+               class="activo">
+                ▦ &nbsp; Mis citas
+            </a>
+
+            <a th:href="@{/paciente/reservar}">
+                ＋ &nbsp; Reservar cita
+            </a>
+        </nav>
+
+        <div class="sidebar-inferior">
+            <div class="seguridad">
+                <strong>Tu espacio es seguro</strong>
+                <p>Tus datos están protegidos
+                   y son confidenciales.</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="contenido">
+
+        <header class="topbar">
+
+            <div class="usuario">
+                <div class="avatar">SM</div>
+                <div>
+                    <strong>Sofía Martínez</strong>
+                    <small>Paciente</small>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="dashboard">
+
+            <section class="encabezado">
+
+                <div>
+                    <p class="etiqueta">MI ESPACIO</p>
+                    <h1>Mis citas</h1>
+                    <p>Consulta y gestiona tus próximas sesiones.</p>
+                </div>
+
+                <a th:href="@{/paciente/reservar}"
+                   class="btn-nueva">
+                    + &nbsp; Nueva cita
+                </a>
+
+            </section>
+
+            <!-- PESTAÑAS -->
+            <div class="pestanas">
+
+                <a href="#proximas" class="activo">
+                    Próximas
+                    <span th:text="${cantidadProximas}">0</span>
+                </a>
+
+                <a href="#historial">
+                    Historial
+                    <span th:text="${cantidadHistorial}">0</span>
+                </a>
+
+            </div>
+
+            <!-- PROXIMAS CITAS -->
+            <section id="proximas">
+
+                <div th:if="${#lists.isEmpty(proximas)}"
+                     class="sin-citas">
+                    No tienes próximas citas programadas.
+                </div>
+
+                <div class="cita-card"
+                     th:each="c : ${proximas}">
+
+                    <div class="profesional">
+
+                        <div class="avatar-profesional">
+                            ♡
+                        </div>
+
+                        <div>
+                            <strong th:text="${nombresPsicologos[c.idPsicologo]}">
+                                Psicólogo
+                            </strong>
+
+                            <small>Sesión psicológica</small>
+                        </div>
+
+                    </div>
+
+                    <div class="datos-cita">
+
+                        <div>
+                            <p class="etiqueta">FECHA</p>
+                            <strong th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}">
+                                22/04/2026
+                            </strong>
+                        </div>
+
+                        <div>
+                            <p class="etiqueta">HORA</p>
+                            <strong th:text="${#temporals.format(c.hora,'HH:mm')}">
+                                10:30
+                            </strong>
+                        </div>
+
+                        <div>
+                            <p class="etiqueta">MODALIDAD</p>
+                            <strong th:text="${c.modalidad}">
+                                Videollamada
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- HISTORIAL -->
+            <section id="historial">
+
+                <p class="etiqueta historial-titulo">
+                    HISTORIAL RECIENTE
+                </p>
+
+                <div class="historial-contenedor">
+
+                    <div th:if="${#lists.isEmpty(historial)}"
+                         class="sin-citas">
+                        Todavía no tienes citas en tu historial.
+                    </div>
+
+                    <div class="historial-fila"
+                         th:each="c : ${historial}">
+
+                        <div class="historial-icono">
+                            ✓
+                        </div>
+
+                        <div class="historial-detalles">
+
+                            <strong th:text="${nombresPsicologos[c.idPsicologo]}">
+                                Psicólogo
+                            </strong>
+
+                            <small>
+                                <span th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}">
+                                    08/04/2026
+                                </span>
+
+                                ·
+
+                                <span th:text="${#temporals.format(c.hora,'HH:mm')}">
+                                    10:30
+                                </span>
+
+                                ·
+
+                                <span th:text="${c.modalidad}">
+                                    Videollamada
+                                </span>
+                            </small>
+
+                        </div>
+
+                        <span class="estado"
+                              th:text="${c.estado}">
+                            COMPLETADA
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

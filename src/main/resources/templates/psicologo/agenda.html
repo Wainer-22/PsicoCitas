@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mi agenda | Calma</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/agenda.css}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="marca">
+            <div class="logo">♡</div>
+            <div>
+                <h3>Calma</h3>
+                <small>PSICOLOGÍA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a href="#">⌂ &nbsp; Resumen</a>
+
+            <a th:href="@{/psicologo/agenda}"
+               class="activo">
+                ▦ &nbsp; Mi agenda
+            </a>
+
+            <a th:href="@{/psicologo/disponibilidad}">
+                ◷ &nbsp; Disponibilidad
+            </a>
+        </nav>
+
+        <div class="sidebar-inferior">
+            <div class="seguridad">
+                <strong>Tu espacio es seguro</strong>
+                <p>Tu información es confidencial.</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <div class="contenido">
+
+        <header class="topbar">
+            <div class="usuario">
+                <div class="avatar">VR</div>
+                <div>
+                    <strong>Dra. Valentina Ruiz</strong>
+                    <small>Psicólogo</small>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+
+            <div class="titulo">
+
+                <div>
+                    <p class="etiqueta">ORGANIZACIÓN</p>
+                    <h1>Mi agenda</h1>
+                    <p>Visualiza y organiza tus sesiones.</p>
+                </div>
+
+                <div class="selector-vista">
+
+                    <a th:href="@{/psicologo/agenda(
+                       vista='dia',fecha=${fecha})}"
+                       th:classappend="${vista == 'dia'} ? 'activo' : ''">
+                        Día
+                    </a>
+
+                    <a th:href="@{/psicologo/agenda(
+                       vista='semana',fecha=${fecha})}"
+                       th:classappend="${vista == 'semana'} ? 'activo' : ''">
+                        Semana
+                    </a>
+
+                    <a th:href="@{/psicologo/agenda(
+                       vista='mes',fecha=${fecha})}"
+                       th:classappend="${vista == 'mes'} ? 'activo' : ''">
+                        Mes
+                    </a>
+
+                </div>
+
+            </div>
+
+            <section class="calendario">
+
+                <div class="calendario-barra">
+
+                    <div class="navegacion-fecha">
+
+                        <a th:href="@{/psicologo/agenda(
+                           vista=${vista},fecha=${anterior})}"
+                           class="flecha">
+                            ‹
+                        </a>
+
+                        <strong th:text="${tituloPeriodo}">
+                            Período
+                        </strong>
+
+                        <a th:href="@{/psicologo/agenda(
+                           vista=${vista},fecha=${siguiente})}"
+                           class="flecha">
+                            ›
+                        </a>
+
+                    </div>
+
+                    <a th:href="@{/psicologo/agenda(vista=${vista})}"
+                       class="btn-hoy">
+                        Hoy
+                    </a>
+
+                </div>
+
+                <!-- VISTA SEMANAL -->
+                <div th:if="${vista == 'semana'}"
+                     class="semana">
+
+                    <div class="dia-columna"
+                         th:each="dia : ${dias}">
+
+                        <div class="dia-encabezado">
+                            <small th:text="${#temporals.format(dia,'EEE')}">
+                                LUN
+                            </small>
+
+                            <strong th:text="${#temporals.format(dia,'dd')}">
+                                21
+                            </strong>
+                        </div>
+
+                        <div class="dia-contenido">
+
+                            <div class="cita"
+                                 th:each="c : ${citasPorDia[dia]}">
+
+                                <strong th:text="${#temporals.format(c.hora,'HH:mm')}">
+                                    09:00
+                                </strong>
+
+                                <span th:text="${nombresPacientes[c.idPaciente]}">
+                                    Paciente
+                                </span>
+
+                                <small th:text="${c.modalidad}">
+                                    Presencial
+                                </small>
+
+                                <small th:text="${c.estado}">
+                                    PROGRAMADA
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- VISTA DIARIA Y MENSUAL -->
+                <div th:unless="${vista == 'semana'}"
+                     class="lista-agenda">
+
+                    <div th:if="${#lists.isEmpty(citas)}"
+                         class="sin-citas">
+                        No hay citas registradas
+                        para el período seleccionado.
+                    </div>
+
+                    <div class="cita-fila"
+                         th:each="c : ${citas}">
+
+                        <div class="cita-fecha">
+                            <strong th:text="${#temporals.format(c.fecha,'dd')}">
+                                22
+                            </strong>
+                            <small th:text="${#temporals.format(c.fecha,'MMM')}">
+                                ABR
+                            </small>
+                        </div>
+
+                        <div class="cita-paciente">
+                            <strong th:text="${nombresPacientes[c.idPaciente]}">
+                                Paciente
+                            </strong>
+
+                            <small th:text="${c.modalidad}">
+                                Videollamada
+                            </small>
+                        </div>
+
+                        <div class="cita-hora"
+                             th:text="${#temporals.format(c.hora,'HH:mm')}">
+                            10:30
+                        </div>
+
+                        <span class="estado"
+                              th:text="${c.estado}">
+                            PROGRAMADA
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div th:if="${vista == 'semana' and #lists.isEmpty(citas)}"
+                     class="sin-citas">
+                    No hay citas registradas esta semana.
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>
