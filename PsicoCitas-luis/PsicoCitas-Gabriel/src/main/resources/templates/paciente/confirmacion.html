@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reservación confirmada | Calma</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="app d-flex flex-column flex-lg-row min-vh-100 bg-light">
+
+    <aside class="sidebar col-12 col-lg-3 col-xl-2 d-flex flex-column bg-white border-end p-3 flex-shrink-0">
+
+        <div class="marca d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+            <div class="logo rounded-circle bg-primary text-white d-flex align-items-center justify-content-center">♡</div>
+            <div>
+                <h3>Calma</h3>
+                <small>PSICOLOGÍA</small>
+            </div>
+        </div>
+
+        <nav class="menu nav nav-pills flex-column gap-2">
+            <a th:href="@{/paciente/inicio}">
+                ⌂ &nbsp; Inicio
+            </a>
+
+            <a th:href="@{/paciente/citas}">
+                ▦ &nbsp; Mis citas
+            </a>
+
+            <a th:href="@{/paciente/reservar}">
+                ＋ &nbsp; Reservar cita
+            </a>
+        </nav>
+
+        <div class="sidebar-inferior mt-auto pt-4">
+            <div class="seguridad alert alert-info mb-0">
+                <strong>Tu espacio es seguro</strong>
+                <p>Tu información es confidencial.</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <div class="contenido flex-grow-1 min-vh-100">
+
+        <header class="topbar d-flex justify-content-end align-items-center bg-white border-bottom p-3">
+            <div class="usuario d-flex align-items-center gap-3">
+                <div class="avatar rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center">SM</div>
+                <div>
+                    <strong>Sofía Martínez</strong>
+                    <small>Paciente</small>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard container-fluid p-3 p-md-4">
+
+            <section class="confirmacion card shadow-sm border-0 p-4 mx-auto text-center">
+
+                <div class="confirmacion-icono rounded-circle bg-success-subtle text-success fw-bold p-3 mx-auto mb-3">✓</div>
+
+                <p class="etiqueta small fw-semibold text-primary text-uppercase">RESERVACIÓN CONFIRMADA</p>
+
+                <h1>¡Tu cita quedó agendada!</h1>
+
+                <p class="confirmacion-texto text-secondary">
+                    Guardamos tu reservación. Puedes consultarla,
+                    reprogramarla o cancelarla desde "Mis citas".
+                </p>
+
+                <div class="detalle-cita card card-body bg-light mb-3">
+
+                    <div class="detalle-fila d-flex justify-content-between gap-3 py-2 border-bottom">
+                        <span>Profesional</span>
+                        <strong th:text="${nombrePsicologo}">
+                            Dra. Valentina Ruiz
+                        </strong>
+                    </div>
+
+                    <div class="detalle-fila d-flex justify-content-between gap-3 py-2 border-bottom">
+                        <span>Fecha</span>
+                        <strong th:text="${#temporals.format(cita.fecha,'dd/MM/yyyy')}">
+                            06/11/2026
+                        </strong>
+                    </div>
+
+                    <div class="detalle-fila d-flex justify-content-between gap-3 py-2 border-bottom">
+                        <span>Hora</span>
+                        <strong th:text="${#temporals.format(cita.hora,'HH:mm')}">
+                            09:00
+                        </strong>
+                    </div>
+
+                    <div class="detalle-fila d-flex justify-content-between gap-3 py-2 border-bottom">
+                        <span>Modalidad</span>
+                        <strong th:text="${cita.modalidad}">
+                            Videollamada
+                        </strong>
+                    </div>
+
+                    <div class="detalle-fila d-flex justify-content-between gap-3 py-2 border-bottom">
+                        <span>Estado</span>
+                        <strong th:text="${cita.estado}">
+                            PROGRAMADA
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="confirmacion-botones d-flex justify-content-center flex-wrap gap-2 mt-4">
+                    <a th:href="@{/paciente/citas}"
+                       class="btn-principal btn btn-primary">
+                        Ver mis citas
+                    </a>
+
+                    <a th:href="@{/paciente/reservar}"
+                       class="btn-secundario btn btn-outline-secondary">
+                        Reservar otra cita
+                    </a>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

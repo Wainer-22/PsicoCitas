@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mis citas | Calma</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="app d-flex flex-column flex-lg-row min-vh-100 bg-light">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar col-12 col-lg-3 col-xl-2 d-flex flex-column bg-white border-end p-3 flex-shrink-0">
+
+        <div class="marca d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+            <div class="logo rounded-circle bg-primary text-white d-flex align-items-center justify-content-center">♡</div>
+            <div>
+                <h3>Calma</h3>
+                <small>PSICOLOGÍA</small>
+            </div>
+        </div>
+
+        <nav class="menu nav nav-pills flex-column gap-2">
+            <a th:href="@{/paciente/inicio}">
+                ⌂ &nbsp; Inicio
+            </a>
+
+            <a th:href="@{/paciente/citas}"
+               class="activo active">
+                ▦ &nbsp; Mis citas
+            </a>
+
+            <a th:href="@{/paciente/reservar}">
+                ＋ &nbsp; Reservar cita
+            </a>
+        </nav>
+
+        <div class="sidebar-inferior mt-auto pt-4">
+            <div class="seguridad alert alert-info mb-0">
+                <strong>Tu espacio es seguro</strong>
+                <p>Tus datos están protegidos
+                   y son confidenciales.</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="contenido flex-grow-1 min-vh-100">
+
+        <header class="topbar d-flex justify-content-end align-items-center bg-white border-bottom p-3">
+
+            <div class="usuario d-flex align-items-center gap-3">
+                <div class="avatar rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center">SM</div>
+                <div>
+                    <strong>Sofía Martínez</strong>
+                    <small>Paciente</small>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="dashboard container-fluid p-3 p-md-4">
+
+            <section class="encabezado d-flex justify-content-end align-items-center bg-white border-bottom p-3">
+
+                <div>
+                    <p class="etiqueta small fw-semibold text-primary text-uppercase">MI ESPACIO</p>
+                    <h1>Mis citas</h1>
+                    <p>Consulta y gestiona tus próximas sesiones.</p>
+                </div>
+
+                <a th:href="@{/paciente/reservar}"
+                   class="btn-nueva btn btn-primary">
+                    + &nbsp; Nueva cita
+                </a>
+
+            </section>
+
+            <div th:if="${mensaje != null}"
+                 class="alert alert-success"
+                 th:text="${mensaje}">
+            </div>
+
+            <div th:if="${error != null}"
+                 class="alert alert-danger"
+                 th:text="${error}">
+            </div>
+
+            <!-- PESTAÑAS -->
+            <div class="pestanas nav nav-tabs mb-3">
+
+                <a href="#proximas" class="activo active">
+                    Próximas
+                    <span th:text="${cantidadProximas}">0</span>
+                </a>
+
+                <a href="#historial">
+                    Historial
+                    <span th:text="${cantidadHistorial}">0</span>
+                </a>
+
+            </div>
+
+            <!-- PROXIMAS CITAS -->
+            <section id="proximas">
+
+                <div th:if="${#lists.isEmpty(proximas)}"
+                     class="sin-citas alert alert-light border text-center p-4">
+                    No tienes próximas citas programadas.
+                </div>
+
+                <th:block th:each="c : ${proximas}">
+
+                <div class="cita-card card shadow-sm border-0 mb-3">
+
+                    <div class="profesional card card-body d-flex flex-row flex-wrap align-items-center gap-2">
+
+                        <div class="avatar-profesional">
+                            ♡
+                        </div>
+
+                        <div>
+                            <strong th:text="${nombresPsicologos[c.idPsicologo]}">
+                                Psicólogo
+                            </strong>
+
+                            <small>Sesión psicológica</small>
+                        </div>
+
+                    </div>
+
+                    <div class="datos-cita row g-3">
+
+                        <div>
+                            <p class="etiqueta small fw-semibold text-primary text-uppercase">FECHA</p>
+                            <strong th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}">
+                                22/04/2026
+                            </strong>
+                        </div>
+
+                        <div>
+                            <p class="etiqueta small fw-semibold text-primary text-uppercase">HORA</p>
+                            <strong th:text="${#temporals.format(c.hora,'HH:mm')}">
+                                10:30
+                            </strong>
+                        </div>
+
+                        <div>
+                            <p class="etiqueta small fw-semibold text-primary text-uppercase">MODALIDAD</p>
+                            <strong th:text="${c.modalidad}">
+                                Videollamada
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="cita-acciones d-flex flex-wrap gap-2">
+
+                        <a th:href="@{/paciente/citas/{id}/reprogramar(id=${c.idCita})}"
+                           class="btn-reprogramar btn btn-outline-primary btn-sm">
+                            Reprogramar
+                        </a>
+
+                        <button type="button"
+                                class="btn-cancelar btn btn-outline-danger btn-sm"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="|#modalCancelar${c.idCita}|">
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- CONFIRMACIÓN DE CANCELACIÓN -->
+                <div class="modal fade"
+                     th:id="|modalCancelar${c.idCita}|"
+                     tabindex="-1"
+                     aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <form th:action="@{/paciente/citas/{id}/cancelar(id=${c.idCita})}"
+                                  method="post">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        Cancelar cita
+                                    </h5>
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <p>
+                                        ¿Seguro que deseas cancelar tu cita con
+                                        <strong th:text="${nombresPsicologos[c.idPsicologo]}">Psicólogo</strong>
+                                        del
+                                        <strong th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}">22/04/2026</strong>
+                                        a las
+                                        <strong th:text="${#temporals.format(c.hora,'HH:mm')}">10:30</strong>?
+                                    </p>
+
+                                    <label class="form-label"
+                                           th:for="|motivo${c.idCita}|">
+                                        Motivo (opcional)
+                                    </label>
+
+                                    <textarea class="form-control"
+                                              th:id="|motivo${c.idCita}|"
+                                              name="motivo"
+                                              rows="3"
+                                              maxlength="500"
+                                              placeholder="Cuéntanos por qué no podrás asistir"></textarea>
+
+                                    <small class="text-muted">
+                                        El horario quedará libre y la cita
+                                        se conservará en tu historial.
+                                    </small>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal">
+                                        Volver
+                                    </button>
+
+                                    <button type="submit"
+                                            class="btn btn-danger">
+                                        Sí, cancelar cita
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                </th:block>
+
+            </section>
+
+            <!-- HISTORIAL -->
+            <section id="historial">
+
+                <p class="etiqueta historial-titulo small fw-semibold text-primary text-uppercase">
+                    HISTORIAL RECIENTE
+                </p>
+
+                <div class="historial-contenedor card shadow-sm border-0">
+
+                    <div th:if="${#lists.isEmpty(historial)}"
+                         class="sin-citas alert alert-light border text-center p-4">
+                        Todavía no tienes citas en tu historial.
+                    </div>
+
+                    <div class="historial-fila d-flex justify-content-between gap-3 border-bottom py-2"
+                         th:each="c : ${historial}">
+
+                        <div class="historial-icono badge text-bg-light"
+                             th:text="${c.estado == 'REALIZADA' ? '✓' : (c.estado == 'CANCELADA' ? '✕' : (c.estado == 'REPROGRAMADA' ? '↻' : '•'))}">
+                            ✓
+                        </div>
+
+                        <div class="historial-detalles card-body">
+
+                            <strong th:text="${nombresPsicologos[c.idPsicologo]}">
+                                Psicólogo
+                            </strong>
+
+                            <small>
+                                <span th:text="${#temporals.format(c.fecha,'dd/MM/yyyy')}">
+                                    08/04/2026
+                                </span>
+
+                                ·
+
+                                <span th:text="${#temporals.format(c.hora,'HH:mm')}">
+                                    10:30
+                                </span>
+
+                                ·
+
+                                <span th:text="${c.modalidad}">
+                                    Videollamada
+                                </span>
+                            </small>
+
+                            <small th:if="${c.motivoCancelacion != null}"
+                                   th:text="${c.motivoCancelacion}">
+                                Motivo
+                            </small>
+
+                        </div>
+
+                        <span class="estado badge text-bg-secondary"
+                              th:classappend="|estado-${#strings.toLowerCase(c.estado)}|"
+                              th:text="${c.estado}">
+                            COMPLETADA
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
